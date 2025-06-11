@@ -23,10 +23,12 @@ class CategoryGetSerializer(ModelSerializer):
         lang = self.context.get('lang', 'uz')  # Default uz
         return obj.category_name_ru if lang == 'ru' else obj.category_name_uz
 
+
 class ProductSerializer(ModelSerializer):
     class Meta:
         model = Product
         fields = "__all__"
+
 
 class ProductGetSerializer(ModelSerializer):
     product_name = SerializerMethodField(method_name="get_product_name", read_only=True)
@@ -34,11 +36,12 @@ class ProductGetSerializer(ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('id', "product_name", "product_price")
+        fields = ('id', "product_name", "product_price", "product_description")
 
     def get_product_name(self, obj):
         lang = self.context.get('lang', 'uz')
         return obj.product_name_ru if lang == 'ru' else obj.product_name_uz
 
-
-
+    def get_product_description(self, obj):
+        lang = self.context.get('lang', 'uz')
+        return obj.product_descriptions_ru if lang == 'ru' else obj.product_descriptions_uz

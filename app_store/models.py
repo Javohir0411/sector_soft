@@ -23,17 +23,19 @@ class Category(AbstractBaseModel):
         verbose_name_plural = "Categories"
         db_table = "categories"
 
+
 class CurrencyChoice(models.TextChoices):
     UZS = "UZS", "So'm"
     USD = "USD", "Dollar"
     RUB = "RUB", "Rubl"
+
 
 class Product(AbstractBaseModel):
     product_name_uz = models.CharField(max_length=255)
     product_name_ru = models.CharField(max_length=255)
     product_category = models.ForeignKey(Category, on_delete=models.CASCADE)
     product_image = models.ImageField(upload_to="product_images/")
-    product_price = models.DecimalField(max_digits=10, decimal_places=2)
+    product_price = models.DecimalField(max_digits=15, decimal_places=2)
     product_price_currency = models.CharField(max_length=3, choices=CurrencyChoice, default=CurrencyChoice.UZS)
     product_descriptions_uz = models.TextField()
     product_descriptions_ru = models.TextField()
@@ -44,5 +46,3 @@ class Product(AbstractBaseModel):
     class Meta:
         verbose_name_plural = "Products"
         db_table = "Products"
-
-
