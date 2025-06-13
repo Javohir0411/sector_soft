@@ -96,3 +96,11 @@ class BotUser(AbstractBaseModel):
     class Meta:
         verbose_name_plural = "BotUsers"
         db_table = "BotUser"
+
+class Cart(AbstractBaseModel):
+    user = models.ForeignKey("app_store.BotUser", on_delete=models.CASCADE, related_name="cart")
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="items")
+    product_color = models.ForeignKey(ProductColor, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)

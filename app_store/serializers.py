@@ -44,7 +44,9 @@ class CategoryGetSerializer(ModelSerializer):
 class ProductImageSerializer(ModelSerializer):
     class Meta:
         model = ProductImage
-        fields = ['image']
+        fields = ['id', 'color', 'image']
+
+
 
 
 class ProductColorSerializer(ModelSerializer):
@@ -54,6 +56,12 @@ class ProductColorSerializer(ModelSerializer):
         model = ProductColor
         fields = ['id', 'product_color_uz', 'product_color_ru', 'price', 'currency', 'images']
 
+    def create(self, validated_data):
+        images_data = validated_data.pop('images', [])
+        color = ProductColor.objects.create(**validated_data)
+        for image_data in images_data:
+            ProductImage.objects.create(color=color, **image_data)
+        return color
 
 class ProductGetSerializer(ModelSerializer):
     product_name = SerializerMethodField()

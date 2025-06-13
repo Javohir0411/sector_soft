@@ -1,7 +1,13 @@
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
-from app_store.models import Category, Product
-from app_store.serializers import CategoryGetSerializer, CategorySerializer, ProductGetSerializer, ProductSerializer
+from app_store.models import Category, Product, ProductColor, ProductImage
+from app_store.serializers import (
+    CategoryGetSerializer,
+    CategorySerializer,
+    ProductGetSerializer,
+    ProductSerializer,
+    ProductColorSerializer,
+    ProductImageSerializer)
 
 
 class CategoryViewSet(ModelViewSet):
@@ -30,3 +36,12 @@ class ProductViewSet(ModelViewSet):
         context = super().get_serializer_context()
         context["lang"] = self.request.query_params.get("lang", "uz")
         return context
+
+
+class ProductColorViewSet(ModelViewSet):
+    queryset = ProductColor.objects.all()
+    serializer_class = ProductColorSerializer
+
+class ProductImageViewSet(ModelViewSet):
+    queryset = ProductImage.objects.all()
+    serializer_class = ProductImageSerializer
