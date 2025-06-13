@@ -22,7 +22,7 @@ class Category(AbstractBaseModel):
         blank=True,
         related_name="subcategories"
     )
-
+    objects = models.Manager
     def __str__(self):
         return f"{self.category_name_uz} | {self.category_name_ru}"
 
@@ -59,6 +59,8 @@ class ProductColor(AbstractBaseModel):  # har xil mahsulot, har xil rangda va ra
     product_color_ru = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=15, decimal_places=2)
     currency = models.CharField(max_length=3, choices=CurrencyChoice, default=CurrencyChoice.UZS)
+
+
 
     def __str__(self):
         return f"{self.product} | {self.product_color_uz}"
