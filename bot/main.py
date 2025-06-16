@@ -11,7 +11,9 @@ logger = logging.getLogger(__name__)
 
 # Django sozlamalarini yuklash
 sys.path.append(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # loyihaning ildizini sys.path ga qo'shamiz
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+)  # loyihaning ildizini sys.path ga qo'shamiz
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 
 import django
@@ -26,12 +28,15 @@ from aiogram.enums import ParseMode
 from aiogram.fsm.storage.memory import MemoryStorage
 
 #  Token va handlerlar
-from configuration import BOT_TOKEN
+import os
+from dotenv import load_dotenv
 from bot.handlers import start
 from bot.handlers import delete_user as delete_user_router
 from bot.keyboards import get_categories_and_products
 from bot.keyboards.get_product_details import router as product_details_router
 
+load_dotenv()
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 async def main():
     #  Bot va dispatcher
